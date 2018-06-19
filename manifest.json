@@ -7,13 +7,16 @@
 		"scripts": ["backgroundAchievementList.js", "background.js"],
 		"persistent": false
 	},
+	"web_accessible_resources": [
+    "*.csv"
+  	],
 	"content_scripts": [
         {
         "matches": [
             "http://*.mountainproject.com/*",
             "https://*.mountainproject.com/*"
             ],
-        "js": ["jquery.js","csvJSON.js", "achievementList.js", "checkAchievements.js", "getUserTicks.js", "displayAchievements.js", "saveTickList.js"],
+        "js": ["jquery.js","csvJSON.js", "contentscript.js", "achievementList.js", "checkAchievements.js", "getUserTicks.js", "displayAchievements.js", "saveTickList.js", "manipulateTicks.js"],
         "run_at": "document_end"
         }
     ],
