@@ -16,7 +16,7 @@
             "http://*.mountainproject.com/*",
             "https://*.mountainproject.com/*"
             ],
-        "js": ["jquery.js","csvJSON.js", "contentscript.js", "achievementList.js", "checkAchievements.js", "getUserTicks.js", "displayAchievements.js", "saveTickList.js", "manipulateTicks.js"],
+        "js": ["jquery.js","csvJSON.js", "contentscript.js", "achievementList.js", "checkAchievements.js", "getUserTicks.js", "displayAchievements.js", "saveTickList.js", "manipulateTicks.js", "saveAllTicksFromPage.js","orchestration.js"],
         "run_at": "document_end"
         }
     ],
