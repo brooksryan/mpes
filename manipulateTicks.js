@@ -26,9 +26,11 @@ var newTickArray = []
 //takes a tick object from MP and transforms it into a csv -readable
 //formt with the user, tick ID, and that user's rating.
 
-function transformTicksForNeuralNet(tickObject){
+function transformTicksForNeuralNet(tickObject, thisUserID){
 
 		this.validation = is_url(tickObject.URL);
+
+		this.userID = thisUserID;
 
 		this.id = function(){
 			
@@ -65,7 +67,7 @@ function transformTicksForNeuralNet(tickObject){
 			if (this.validation === true){
 			
 			
-				return this.id() + ", " + this.rating();
+				return [this.userID, this.id(), this.rating()];
 
 			} else { 
 
@@ -77,16 +79,22 @@ function transformTicksForNeuralNet(tickObject){
 
 	}
 
-function transformTicks(userTicks, arrayForTicks){
+function transformTicks (userTicks, arrayForTicks, thisUserId){
 		
+		var errorCounter;
+
 		var transformedCSVofTicks = userTicks;
+
+		console.log(transformedCSVofTicks)	
 
 		transformedCSVofTicks.forEach(function(element, index){
 			
-			var newTick = new transformTicksForNeuralNet(element);
+			var newTick = new transformTicksForNeuralNet(element, thisUserId);
 
 
-			if (newTick === "Error"){
+			if (newTick.tickToCsv() == "Error"){
+
+				errorCounter ++
 
 				console.log(element, index);
 
@@ -100,6 +108,69 @@ function transformTicks(userTicks, arrayForTicks){
 
 		console.log(newTickArray);
 }
+
+//merge all of the users tick list into a single exportable
+//array userID, ClimbID, Rating
+
+function makeBigArray (bigArrayOfUserData) {
+
+	console.log("Started the big array creation", bigArrayOfUserData)
+
+	var bigTickArray = []
+
+	//new Promise (function(resolve, reject){
+
+		bigArrayOfUserData.forEach(function(element){
+
+			console.log(element['userID'])
+			var thisUserIdToAdd = element['userID']
+
+			console.log(element['userTicks'])
+			var thisUsersTicks = element['userTicks']
+
+			console.log("starting the foreach function")
+			
+			transformTicks(thisUsersTicks, bigTickArray, thisUserIdToAdd);
+
+			console.log("I started the iteration", element)
+
+		});
+
+	console.log("this is done");
+
+	console.log(bigTickArray)
+
+	return bigTickArray
+	
+	//Promise.resolve(bigTickArray)
+
+	//});
+}
+
+var downloadThisRouteCSV = function(arrayToBeDownloaded) {
+
+var csvContent = "data:text/csv;charset=utf-8,";
+		
+arrayToBeDownloaded.forEach(function(rowArray){
+   let row = rowArray.join(",");
+   csvContent += row + "\r\n";
+}); 
+
+var encodedUri = encodeURI(csvContent);
+var link = document.createElement("a");
+link.setAttribute("href", encodedUri);
+link.setAttribute("download", "my_data.csv");
+link.innerHTML= "Click Here to download";
+document.body.appendChild(link); // Required for FF
+
+link.click();
+
+
+}
+
+
+
+
 
 thisData = csvJSON("file:///C:/Users/bryan/Downloads/contentSettings/ticks.csv");
 

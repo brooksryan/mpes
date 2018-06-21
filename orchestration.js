@@ -10,17 +10,24 @@ function getPredictionForCurrentClimb(){
 
 	//get all user ticks returns an object with userURL, exportURL, 
 	return getAllUserTickUrls()
-	
-	//then we download all of the CSVs for those users ticks transorm
-	//the ticks to JSON objects and add them to the array of user data 
-	//as "userTicks"
-	.then(function(result){return userDataFromCSVPromise(result)})
 
+	.then(function(result){
+
+		//then we download all of the CSVs for those users ticks transorm
+		//the ticks to JSON objects and add them to the array of user data 
+		//as "userTicks"	
+		return userDataFromCSVPromise(result)})
 
 	.then(function(userURLS){
 
-		console.log("check out all the urls I just got: ", userURLS[10])
+		return makeBigArray(userURLS)})
 
+	.then(function(newBigCSV){
+
+		downloadThisRouteCSV(newBigCSV);
+
+		console.log("check out all the urls I just got: ", newBigCSV)
+	
 	})
 
 };

@@ -1,7 +1,9 @@
 
 var thisUserTickExportUrl = window.location.href+"/tick-export"
 
-
+//takes the csvs of ticks for each user, converts them into a JSON
+//file and returns the original array of user data objects with a 
+//new field in each object for the user's JSON of ticks
 function userDataFromCSVPromise (arrayOfUserDataObjects){
 
     //create a promise to return all of the data collected
