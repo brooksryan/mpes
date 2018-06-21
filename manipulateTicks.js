@@ -149,21 +149,24 @@ function makeBigArray (bigArrayOfUserData) {
 
 var downloadThisRouteCSV = function(arrayToBeDownloaded) {
 
-var csvContent = "data:text/csv;charset=utf-8,";
-		
-arrayToBeDownloaded.forEach(function(rowArray){
-   let row = rowArray.join(",");
-   csvContent += row + "\r\n";
-}); 
+	var csvContent = "";
+			
+	arrayToBeDownloaded.forEach(function(rowArray){
+	   let row = rowArray.join(",");
+	   csvContent += row + "\r\n";
+	}); 
 
-var encodedUri = encodeURI(csvContent);
-var link = document.createElement("a");
-link.setAttribute("href", encodedUri);
-link.setAttribute("download", "my_data.csv");
-link.innerHTML= "Click Here to download";
-document.body.appendChild(link); // Required for FF
+	var encodedUri = new Blob([csvContent], {type: 'text/csv' });
 
-link.click();
+	var csvUrl = URL.createObjectURL(encodedUri);
+
+	var link = document.createElement("a");
+	link.setAttribute("href", csvUrl);
+	link.setAttribute("download", "my_data.csv");
+	link.innerHTML= "Click Here to download";
+	document.body.appendChild(link); // Required for FF
+
+	link.click();
 
 
 }
