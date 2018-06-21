@@ -76,32 +76,34 @@ function transformTicksForNeuralNet(tickObject){
 
 	}
 
-$.get("chrome-extension://mmobjpoobjddbmdcaedncgnaiamcanok/ticks.csv", function(data) {
-	console.log("data");
-	
-	var transformedCSVofTicks = csvJSON(data)
+function transformTicks(){
 
-	transformedCSVofTicks.forEach(function(element, index){
+	$.get("chrome-extension://mmobjpoobjddbmdcaedncgnaiamcanok/ticks.csv", function(data) {
+		console.log("data");
 		
-		var newTick = new transformTicksForNeuralNet(element);
+		var transformedCSVofTicks = csvJSON(data)
+
+		transformedCSVofTicks.forEach(function(element, index){
+			
+			var newTick = new transformTicksForNeuralNet(element);
 
 
-		if (newTick === "Error"){
+			if (newTick === "Error"){
 
-			console.log(element, index);
+				console.log(element, index);
 
-		} else {
+			} else {
 
-			newTickArray.push(newTick.tickToCsv());
+				newTickArray.push(newTick.tickToCsv());
 
-		}
-		
-	})
+			}
+			
+		})
 
-	console.log(newTickArray);
+		console.log(newTickArray);
 
-});
-
+	});
+}
 
 thisData = csvJSON("file:///C:/Users/bryan/Downloads/contentSettings/ticks.csv");
 

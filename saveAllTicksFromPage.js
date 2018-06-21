@@ -11,7 +11,7 @@ var userData = function(user){
 			
 		var splitURL = userURL.split("/");
 
-		if (splitURL[4] >= 100000000 && splitURL[4] <= 999999999){			
+		if (splitURL[4]){			
 		
 			return splitURL[4];
 		
@@ -54,5 +54,5 @@ function getAllUserTickUrls(whatToDoWithUrls){
 
 		resolve(arrayOfLinks);
 
-		})
+	})
 }
