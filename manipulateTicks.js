@@ -16,6 +16,7 @@ function is_url(str)
 }
 
 
+
 var thisStuff = String(chrome.runtime.getURL("ticks.csv"));
 
 console.log(thisStuff);
@@ -76,12 +77,9 @@ function transformTicksForNeuralNet(tickObject){
 
 	}
 
-function transformTicks(){
-
-	$.get("chrome-extension://mmobjpoobjddbmdcaedncgnaiamcanok/ticks.csv", function(data) {
-		console.log("data");
+function transformTicks(userTicks, arrayForTicks){
 		
-		var transformedCSVofTicks = csvJSON(data)
+		var transformedCSVofTicks = userTicks;
 
 		transformedCSVofTicks.forEach(function(element, index){
 			
@@ -94,17 +92,20 @@ function transformTicks(){
 
 			} else {
 
-				newTickArray.push(newTick.tickToCsv());
+				arrayForTicks.push(newTick.tickToCsv());
 
 			}
 			
 		})
 
 		console.log(newTickArray);
-
-	});
 }
 
 thisData = csvJSON("file:///C:/Users/bryan/Downloads/contentSettings/ticks.csv");
 
 console.log(thisData);
+
+function processAllUserItemsForMachineLearning () {
+
+
+}
