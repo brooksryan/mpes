@@ -10,23 +10,45 @@ function getPredictionForCurrentClimb(){
 
 	//get all user ticks returns an object with userURL, exportURL, 
 	return getAllUserTickUrls()
-	
-	//then we download all of the CSVs for those users ticks transorm
-	//the ticks to JSON objects and add them to the array of user data 
-	//as "userTicks"
-	.then(function(result){return userDataFromCSVPromise(result)})
 
+	.then(function(result){
+
+		//then we download all of the CSVs for those users ticks transorm
+		//the ticks to JSON objects and add them to the array of user data 
+		//as "userTicks"	
+		$("#downloadAllUserTicks").text("Almost There");
+		return userDataFromCSVPromise(result)})
 
 	.then(function(userURLS){
 
-		console.log("check out all the urls I just got: ", userURLS[10])
+		$("#downloadAllUserTicks").text("Tidying Up");
 
+		return makeBigArray(userURLS)})
+
+	.then(function(newBigCSV){
+
+		$("#downloadAllUserTicks").text("Done!");
+
+		downloadThisRouteCSV(newBigCSV);
+
+		console.log("check out all the urls I just got: ", newBigCSV)
+	
 	})
 
 };
 
+$("div.pt-main-content > div.col-xs-12").append('<button id="downloadAllUserTicks" class = "button"> Download CSV of All Users Ticks </button>')
 
-getPredictionForCurrentClimb()
+
+$("#downloadAllUserTicks").click(function(){
+
+	$(this).text("loading");
+
+	console.log("Ive been clicked!");
+	
+	getPredictionForCurrentClimb();
+
+})
 
 	// 	//pull the csvs for each of those users
 
