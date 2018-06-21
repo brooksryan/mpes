@@ -105,7 +105,7 @@ thisData = csvJSON("file:///C:/Users/bryan/Downloads/contentSettings/ticks.csv")
 
 console.log(thisData);
 
-function processAllUserItemsForMachineLearning () {
+function processAllUserItemsForMachineLearning (arrayOfUsersAndTicks) {
 
 
 }
