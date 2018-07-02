@@ -60,14 +60,42 @@ function transformTicksForNeuralNet(tickObject, thisUserID){
 			}
 		};
 
+		this.netRating = function(){
+			
+			if (tickObject['"Your Stars"'] === "-1"){
+			
+				return 0
+			
+			} else {
+
+				return tickObject['"Your Stars"']-Math.round(tickObject['"Avg Stars"']);
+
+			}
+		};
+
 		//returns a comma separated text string of the user, 
 		//the climb id, and the user's rating	
-		this.tickToCsv = function (){
+		this.tickToCsvAbsolute = function (){
 
 			if (this.validation === true){
 			
 			
 				return [this.userID, this.id(), this.rating()];
+
+			} else { 
+
+				return "Error";
+
+			}
+
+		};
+		
+		this.tickToCsvRelative = function (){
+
+			if (this.validation === true){
+			
+			
+				return [this.userID, this.id(), this.netRating()];
 
 			} else { 
 
@@ -92,7 +120,7 @@ function transformTicks (userTicks, arrayForTicks, thisUserId){
 			var newTick = new transformTicksForNeuralNet(element, thisUserId);
 
 
-			if (newTick.tickToCsv() == "Error"){
+			if (newTick.tickToCsvRelative() == "Error"){
 
 				errorCounter ++
 
@@ -100,7 +128,7 @@ function transformTicks (userTicks, arrayForTicks, thisUserId){
 
 			} else {
 
-				arrayForTicks.push(newTick.tickToCsv());
+				arrayForTicks.push(newTick.tickToCsvRelative());
 
 			}
 			
