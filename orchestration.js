@@ -1,9 +1,17 @@
-//save all ticks from page
+/* WELCOME TO THE ORCHESTRATION LAYER. THIS FILE DETERMINES  */ 
+/* WHAT TO DO BASED ON THE PAGE YOU ARE ON                   */
 
-//save all ticks from page
+/* EVERY THING HERE SHOULD HAVE A PAGE DETERMINATION OR      */
+/* DEPENDENT FUNCTION, THEN A FUNCTION THAT FIRES WHEN THAT  */
+/* PAGE CRITERIA IS MET									     */
 
+/* EG "AM I ON A TICK PAGE?" -> TICK PAGE FUNCTION 		     */
+
+
+
+
+// ------------ SECTION FOR TICK LIST DOWNLOAD ------------- //
 //get all user ticks returns an object with userURL, exportURL, 
-
 function getPredictionForCurrentClimb(){
 
 	console.log("made it to the prediction function")
@@ -37,6 +45,9 @@ function getPredictionForCurrentClimb(){
 
 };
 
+//adds a button that enables you to download a CSV of all of the ticks
+//from all of the users who have ticked a climb from on the  
+//tick page for a climb
 $("div.pt-main-content > div.col-xs-12").append('<button id="downloadAllUserTicks" class = "button"> Download CSV of All Users Ticks </button>')
 
 
@@ -50,13 +61,32 @@ $("#downloadAllUserTicks").click(function(){
 
 })
 
-	// 	//pull the csvs for each of those users
 
-	// ).then(
+// -------- SECTION FOR IS CLIMB ON A CLASSIC LIST --------- //
 
-	// 	//manipulate the csvs to create a single userid, routeid, rating csv
+//Determines what kind of page we're on
+var thisUrlIsTheCurrentPage = whatPageAmIOn()
 
-	// ).then (
+var thisPageDetails = returnIdForMountainProjectPage(thisUrlIsTheCurrentPage);
 
 
-	// )
+if (thisPageDetails.pageType() === "route") {
+
+	console.log("I'm a route!!");
+
+	var thisRoutesId = Number(thisPageDetails.id)
+
+	classicRouteOrchestration(thisRoutesId)
+
+}
+
+else {
+	
+	console.log("I'm not a route")
+
+}
+
+
+
+
+
