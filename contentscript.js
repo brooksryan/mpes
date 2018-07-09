@@ -21,14 +21,55 @@ $("a.dropdown-item:contains('Your Page')").attr("href",function(i,val){
 });
 
 
-//Returns binary if the user is logged in or not
+//takes a split url, returns if it's a user or a route
+//also returns the ID
+function pageObject (url){
+
+	this.splitUrl = url.split("/");
+
+	this.pageUrl = url;
+
+	this.pageType = function(){
+
+			if (this.splitUrl[3] === "route"){
+	
+				return "route"
+	
+			} if (this.splitUrl[3] === "user"){
+	
+				return "user"
+	
+			} else {
+	
+				return "other"
+	
+			};
+		};
+
+	this.id = this.splitUrl[4];
+
+}
+
+//CREATES AN OBJECT FOR THE CURRENT LOGGED IN USER
+thisUsersMpInfo = new pageObject(thisLoggedInUserUrl);
+
+
+//CREATES AN OBJECT FOR THE CURRENT PAGE THE USER 
+//IS ON
+thisMpPageInfo = new pageObject(window.location.href);
+
+console.log("the current page is a: ", thisMpPageInfo.pageType())
+
+
+// Returns binary if the user is logged and on their own page
+// in or not
 function isThisTheLoggedInUser () {
-	return thisLoggedInUserUrl === window.location.href;
+	return thisUsersMpInfo.pageUrl === window.location.href;
 }
 
 //Returns binary if the user is logged in or not
 
-var loggedInUserStatus =isThisTheLoggedInUser();
+var loggedInUserStatus = isThisTheLoggedInUser();
 
 //checks if the page the user is on is the user's page
 function addSyncDataButton(){
@@ -73,32 +114,6 @@ function whatPageAmIOn (){
 var thisUrlIsTheCurrentPage = whatPageAmIOn()
 
 
-
-//takes a split url, returns if it's a user or a route
-//also returns the ID
-function pageObject (urlArray){
-
-	this.pageType = function(){
-
-			if (urlArray[3] === "route"){
-	
-				return "route"
-	
-			} if (urlArray[3] === "user"){
-	
-				return "user"
-	
-			} else {
-	
-				return "other"
-	
-			};
-		}
-
-	this.id = urlArray[4]
-
-}
-
 //returns object with page type and id for current
 //page 
 function returnIdForMountainProjectPage(url) {
@@ -107,13 +122,13 @@ function returnIdForMountainProjectPage(url) {
 
 	console.log("this is the url I got back", url)
 
-	var thisPageSplitURL = url.split("/");
-
-	var thisPageObject = new pageObject(thisPageSplitURL);
+	var thisPageObject = new pageObject(url);
 
 	console.log(thisPageObject)
 
 	return thisPageObject
 }
+
+var displayAchievementsStatus = false
 
 addSyncDataButton()

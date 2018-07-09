@@ -56,5 +56,11 @@ function displayTheRightAchievements (){
 	}
 }
 
+if (displayAchievementsStatus === true){
 
-displayTheRightAchievements();
+	displayTheRightAchievements()
+
+} else {
+
+	console.log("achievements are turned off")
+}

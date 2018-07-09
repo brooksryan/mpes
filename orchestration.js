@@ -80,6 +80,12 @@ if (thisPageDetails.pageType() === "route") {
 
 }
 
+else if (thisPageDetails.pageType() === "user"){
+
+	followFeatureOrchestration ()
+
+}
+
 else {
 	
 	console.log("I'm not a route")
