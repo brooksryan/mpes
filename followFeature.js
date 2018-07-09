@@ -40,6 +40,10 @@ function addFollowStatusAndInteraction (followStatus) {
 
 		} else {
 
+			var unFollowURL = "https://mpes-brooksryan.c9users.io/users/deleteConnection/" + thisUsersMpInfo.id + "/" + thisMpPageInfo.id +"/"
+
+			$("div.info > div.mt-1").after('<class="mt-1"> <a href = "' + unFollowURL + '"class="btn btn-sm btn-primary"> Unfollow </a></div>')
+
 			console.log("add the unfollow button here")
 
 			resolve("unfollow button added")
