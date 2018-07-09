@@ -3,7 +3,7 @@ function newRoute (newDate, newName) {
   this.name = newName;
 }
 
-
+//LIST OF ACHIEVEMENTS
 var achievementList = [
   {
     name: "Climb Outside",
@@ -60,4 +60,12 @@ var achievementList = [
     points: "",
     image: "" 
   }
+]
+
+//LISTS OF CLIMBS
+var fiftyClassics = [
+  105889511,
+  105872592,
+  105941738,
+  106997654
 ]
