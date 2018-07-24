@@ -28,6 +28,7 @@
         		"manipulateTicks.js", 
         		"saveAllTicksFromPage.js",
         		"isThisRouteClassic.js",
+        		"followFeature.js",
         		"orchestration.js"],
         "run_at": "document_end"
         }
