@@ -19,13 +19,7 @@
         "js": [
         		"jquery.js",
         		"csvJSON.js", 
-        		"contentscript.js", 
-        		 
-        		
-        		"getUserTicks.js", 
-        		
-        		
-        		
+        		"contentscript.js",         		
         		"saveAllTicksFromPage.js",
         		"isThisRouteClassic.js",
         		"followFeature.js",
