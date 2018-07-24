@@ -58,8 +58,6 @@ thisUsersMpInfo = new pageObject(thisLoggedInUserUrl);
 //IS ON
 thisMpPageInfo = new pageObject(window.location.href);
 
-console.log("the current page is a: ", thisMpPageInfo.pageType())
-
 
 // Returns binary if the user is logged and on their own page
 // in or not
@@ -71,40 +69,12 @@ function isThisTheLoggedInUser () {
 
 var loggedInUserStatus = isThisTheLoggedInUser();
 
-//checks if the page the user is on is the user's page
-function addSyncDataButton(){
-
-	console.log(thisLoggedInUserUrl);
-
-	//appends the sync data button if the user is on their own page
-	if (thisLoggedInUserUrl === window.location.href){
-	
-		$(".info:first").append('<button id="syncUserDataButton"> Sync Ticks For MPES </button>');
-		
-		//click triggers ther syncUserDataFunction		
-		$("#syncUserDataButton").click(function(){
-		  
-		  // syncUserData();
-
-		  getUserData(function(newData){
-
-		  		saveTheseTicksToChrome()
-		  })
-		
-		})
-	}
-
-	else console.log("this is not the user you are looking for");
-
-}
 
 //gets the route Id for a page
 
 function whatPageAmIOn (){
 
 	var thisPageURL = $(location).attr('href');
-
-	console.log(thisPageURL)
 
 	return thisPageURL
 
@@ -120,15 +90,9 @@ function returnIdForMountainProjectPage(url) {
 
 	var url = whatPageAmIOn();
 
-	console.log("this is the url I got back", url)
-
 	var thisPageObject = new pageObject(url);
-
-	console.log(thisPageObject)
 
 	return thisPageObject
 }
 
 var displayAchievementsStatus = false
-
-addSyncDataButton()

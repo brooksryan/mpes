@@ -1,5 +1,4 @@
 //get all urls for user ticks from a page
-console.log("I loaded the save all ticks thing")
 
 var userData = function(user){
 
@@ -34,25 +33,4 @@ var userData = function(user){
 
 	this.userName = this.calculateUserName(user);
 
-}
-
-var arrayOfLinks = []; 
-
-function getAllUserTickUrls(whatToDoWithUrls){
-
-		return new Promise(function(resolve, reject) {
-
-		console.log("I started the traverse");
-
-		$('h3:contains("Star Ratings ") ~ table > tbody > tr > td > a').each(function(index){
-
-			var thisUserData = 	new userData(this.href);
-
-			arrayOfLinks.push(thisUserData);
-
-		})
-
-		resolve(arrayOfLinks);
-
-	})
 }
