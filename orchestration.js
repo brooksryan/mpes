@@ -39,9 +39,7 @@ else if (thisPageDetails.pageType() === "user"){
 
 else {
 
-	thisNewFeed = new thisUsersFeed(mpesBaseUrl,thisUsersMpInfo.id)
-
-	thisNewFeed.userFeed(thisNewFeed.feedUrl)
+	thisUserFeedOrchestration(mpesBaseUrl,thisUsersMpInfo.id)
 
 }
 

@@ -125,7 +125,7 @@ function thisUsersFeed (baseUrl, userId){
 
 				thisUsersFollowingTicks = (JSON.parse(data));
 
-				this.whereToPrepend
+				// this.prependFriendTicksTable
 
 				thisUsersFollowingTicks.forEach(function(line){
 
@@ -148,7 +148,9 @@ function thisUsersFeed (baseUrl, userId){
 
 	}
 
-	this.whereToPrepend = $("div#homepage-climb-bottom .col-xs-12")
+	this.prependFriendTicksTable = function(){
+	
+		$("div#homepage-climb-bottom .col-xs-12")
 		.first()
 		.prepend(
 			
@@ -161,13 +163,15 @@ function thisUsersFeed (baseUrl, userId){
 					</div>
 					<div class="table-responsive max-height max-height-md-none max-height-xs-300""
 						<div class="col-xs-12">
-							<table table table-striped route-table hidden-xs-down> 
-								<tbody id="followerTickTable">
-									<tr class="route-row">
-										<td>Date</td>
-										<td>Route</td>
-										<td>User</td>
+							<table class="table table-sm table-striped hidden-xs-down"> 
+								<thead>	
+									<tr id = "feedTableHeads" class="route-row">
+										<th>Date</th>
+										<th>Route</th>
+										<th>User</th>
 									</tr>
+								</thead>	
+								<tbody id="followerTickTable">
 								</tbody>
 							</table>
 						</div>
@@ -175,8 +179,15 @@ function thisUsersFeed (baseUrl, userId){
 				</div>
 			</div>
 			`
-		
-		)
+			)
+
+			$('#feedTableHeads>th').css({
+
+				"color": "black",
+				"background-color": "white",
+
+			})
+		}
 
 	this.eachTickFormatting = function(thisTickRow){
 
@@ -187,6 +198,54 @@ function thisUsersFeed (baseUrl, userId){
 		thisTableSelector.append("<tr class='route-row'><td>" + thisTickRow.fields.date + "</td><td><a href='" + thisTickRow.fields.route_url +  "'>" + thisTickRow.fields.route_name + "</a></td><td>"+ thisTickRow.fields.user_name_from_mp + "</td></tr>")
 
 	}
+	this.loadingImageHtmlToAppend = `<div id="loadingImage" class="col-xs-12 blink"> Loading... </div>`
+
+	this.appendLoadingImage = function(){
+		that = this
+		
+		$('div#feedId').append(
+
+			that.loadingImageHtmlToAppend
+
+		)
+
+		$("#loadingImage").css({
+
+			"text-align": "center",
+  				
+		});
+
+		setInterval(function(){
+		
+			$(".blink").fadeOut(300).fadeIn(300);
+		
+		}, 500)
+
+	}
+
+	this.removeLoadingImage = function(stuffToRemove){
+		
+		$('#loadingImage').remove()
+
+	}
+
+}
+
+function thisUserFeedOrchestration(baseUrl, mpUserId){
+
+	thisNewFeed = new thisUsersFeed(baseUrl,mpUserId)
+
+	thisNewFeed.prependFriendTicksTable()
+
+	thisNewFeed.appendLoadingImage()
+
+	return thisNewFeed.userFeed(thisNewFeed.feedUrl).then(function(response){
+
+		console.log("I'm done")
+		
+		thisNewFeed.removeLoadingImage()
+	
+	})
 
 }
 
