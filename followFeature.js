@@ -6,12 +6,9 @@ function makeAFollowingActionOnThisUser (loggedInUserId, userToBeFollowedId, ver
 
 	queryURL = "https://mpes-brooksryan.c9users.io/users/" + verb + "/" + loggedInUserId + "/" + userToBeFollowedId +"/"
 
-		console.log(loggedInUserId + "Is logged in", userToBeFollowedId + "is being checked")
 		return new Promise(function(resolve, reject){
 
 			$.get(queryURL,function(data){
-
-				console.log(data);
 
 				resolve(data);
 
@@ -87,8 +84,6 @@ function addFollowStatusAndInteraction (followStatus) {
 
 			})
 
-			console.log("add the unfollow button here")
-
 			resolve("unfollow button added")
 
 		}
@@ -97,8 +92,6 @@ function addFollowStatusAndInteraction (followStatus) {
 }
 
 function followFeatureOrchestration (){
-
-	console.log("I'm in the orchestration and following feature")
 
 	return makeAFollowingActionOnThisUser(thisUsersMpInfo.id, thisMpPageInfo.id, "status")
 
@@ -131,8 +124,6 @@ function thisUsersFeed (baseUrl, userId){
 			$.get(feedUrl,function(data){
 
 				thisUsersFollowingTicks = (JSON.parse(data));
-
-				console.log(thisUsersFollowingTicks)
 
 				this.whereToPrepend
 
@@ -189,13 +180,9 @@ function thisUsersFeed (baseUrl, userId){
 
 	this.eachTickFormatting = function(thisTickRow){
 
-		console.log("I'm at the append part")
-
 		var thisTableSelector = $("#followerTickTable")
 
 		var thisDate = thisTickRow.fields.date
-
-		console.log(thisDate)
 		
 		thisTableSelector.append("<tr class='route-row'><td>" + thisTickRow.fields.date + "</td><td><a href='" + thisTickRow.fields.route_url +  "'>" + thisTickRow.fields.route_name + "</a></td><td>"+ thisTickRow.fields.user_name_from_mp + "</td></tr>")
 

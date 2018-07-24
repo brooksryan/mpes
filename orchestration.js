@@ -18,14 +18,10 @@ var thisBaseUrl = "https://mpes-brooksryan.c9users.io/"
 //STUFF TO DO IF I'M ON MY OWN PAGE
 if (isThisTheLoggedInUser() === true ) {
 
-	console.log("this is the user's page");
-
 }
 
 // STUFF TO DO IF YOU'RE ON A ROUTE PAGE
 else if (thisPageDetails.pageType() === "route") {
-
-	console.log("I'm a route!!");
 
 	var thisRoutesId = Number(thisPageDetails.id)
 
@@ -46,10 +42,6 @@ else {
 	thisNewFeed = new thisUsersFeed(mpesBaseUrl,thisUsersMpInfo.id)
 
 	thisNewFeed.userFeed(thisNewFeed.feedUrl)
-
-	// thisUsersFeed()
-	
-	console.log("I'm not a route")
 
 }
 

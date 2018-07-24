@@ -32,8 +32,6 @@ function appendClassicListNamesToRoute (arrayOfClassicLists) {
 
 	arrayOfClassicLists.forEach(function(item){
 
-		console.log(item.fields.RouteListName);
-
 		$("div#listDiv").append('<p class="inline-block mr-2">'+ item.fields.RouteListName + '</p>')
 
 	})
@@ -53,7 +51,6 @@ function classicRouteOrchestration (routeId) {
 
 	.catch(function(reason){
 
-		console.log(reason);
 	})
 
 }

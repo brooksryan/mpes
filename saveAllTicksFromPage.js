@@ -1,5 +1,4 @@
 //get all urls for user ticks from a page
-console.log("I loaded the save all ticks thing")
 
 var userData = function(user){
 
