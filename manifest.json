@@ -20,12 +20,12 @@
         		"jquery.js",
         		"csvJSON.js", 
         		"contentscript.js", 
-        		"staticAchievementsAndLists.js", 
+        		 
         		
         		"getUserTicks.js", 
-        		"displayAchievements.js", 
-        		"saveTickList.js", 
-        		"manipulateTicks.js", 
+        		
+        		
+        		
         		"saveAllTicksFromPage.js",
         		"isThisRouteClassic.js",
         		"followFeature.js",
