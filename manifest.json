@@ -1,19 +1,29 @@
 {
-	"name": "Getting Started Example",
-	"version": "1.0",
+	"name": "Mountain Project Ehancement Suite",
+	"version": "0.1",
 	"description": "Build an Extension!",
-	"permissions": ["activeTab", "tabs", "declarativeContent", "storage"],
+	"permissions": ["activeTab", "tabs", "declarativeContent", "storage", "*://mpes-brooksryan.c9users.io/*"],
 	"background": {
-		"scripts": ["backgroundAchievementList.js", "background.js"],
+		"scripts": ["background.js"],
 		"persistent": false
 	},
+	"web_accessible_resources": [
+    "*.csv"
+  	],
 	"content_scripts": [
         {
         "matches": [
             "http://*.mountainproject.com/*",
             "https://*.mountainproject.com/*"
             ],
-        "js": ["jquery.js","csvJSON.js", "achievementList.js", "checkAchievements.js", "getUserTicks.js", "displayAchievements.js", "saveTickList.js"],
+        "js": [
+        		"jquery.js",
+        		"csvJSON.js", 
+        		"contentscript.js",         		
+        		"saveAllTicksFromPage.js",
+        		"isThisRouteClassic.js",
+        		"followFeature.js",
+        		"orchestration.js"],
         "run_at": "document_end"
         }
     ],

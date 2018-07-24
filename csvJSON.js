@@ -1,3 +1,4 @@
+//parses CSVs to JSON
 var csvJSON = function(csv){
 
   var lines=csv.split('\n');
