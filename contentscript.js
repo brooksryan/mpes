@@ -96,5 +96,3 @@ function returnIdForMountainProjectPage(url) {
 }
 
 var displayAchievementsStatus = false
-
-addSyncDataButton()
