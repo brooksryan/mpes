@@ -2,27 +2,28 @@
 // takes my mpId and checks to see if I am following
 // the user whose page I'm on 
 
-function amIFollowingThisUser (loggedInUserId, userToBeFollowedId) {
+function makeAFollowingActionOnThisUser (loggedInUserId, userToBeFollowedId, verb) {
 
-	queryURL = "https://mpes-brooksryan.c9users.io/users/status/" + loggedInUserId + "/" + userToBeFollowedId +"/"
+	queryURL = "https://mpes-brooksryan.c9users.io/users/" + verb + "/" + loggedInUserId + "/" + userToBeFollowedId +"/"
 
-	return new Promise(function(resolve, reject){
+		console.log(loggedInUserId + "Is logged in", userToBeFollowedId + "is being checked")
+		return new Promise(function(resolve, reject){
 
-		$.get(queryURL,function(data){
+			$.get(queryURL,function(data){
 
-			console.log(data);
+				console.log(data);
 
-			resolve(data);
+				resolve(data);
 
-	  	})
-	  	
-	  	.fail(function() {
-			
-			reject(data);
-			
+		  	})
+		  	
+		  	.fail(function(data) {
+				
+				reject(data);
+				
+			})
+
 		})
-
-	})
 
 }
 
@@ -34,31 +35,57 @@ function addFollowStatusAndInteraction (followStatus) {
 
 			var followURL = "https://mpes-brooksryan.c9users.io/users/createNewConnection/" + thisUsersMpInfo.id + "/" + thisMpPageInfo.id +"/"
 			
-			$("div.info > div.mt-1").eq(0).after('<div class="mt-1"> <a href = "' + followURL + '"class="btn btn-sm btn-primary" id = "follow-button"> Follow </a></div>')
+			$("div.info > div.mt-1").eq(0).after('<div class="mt-1"> <a class="btn btn-sm btn-primary" id = "follow-button"> Follow </a></div>')
 
 			$("#follow-button").css({
 
 				"background-color" : "green", 
 				"border-color" : "green",
-				"width": "76.563px"
+				"width": "87.563px",
+				"color": "white !important"
 			
 			});
+
+			$("#follow-button").click(function(){
+
+				makeAFollowingActionOnThisUser(thisUsersMpInfo.id, thisMpPageInfo.id, "createNewConnection").then(function(){
+
+					$("#follow-button").remove()
+
+					followFeatureOrchestration ()
+					
+				})
+
+			})
 
 			resolve("Done")
 
 		} else {
 
-			var unFollowURL = "https://mpes-brooksryan.c9users.io/users/deleteConnection/" + thisUsersMpInfo.id + "/" + thisMpPageInfo.id +"/"
+			//var unFollowURL = "https://mpes-brooksryan.c9users.io/users/deleteConnection/" + thisUsersMpInfo.id + "/" + thisMpPageInfo.id +"/"
 
-			$("div.info > div.mt-1").eq(0).after('<div class="mt-1"> <a href="' + unFollowURL + '"class="btn btn-sm btn-primary" id = "follow-button"> Unfollow </a></div>')
+			$("div.info > div.mt-1").eq(0).after('<div class="mt-1"> <a class="btn btn-sm btn-primary" id = "follow-button"> Unfollow </a></div>')
 
 			$("#follow-button").css({
 
 				"background-color" : "green", 
 				"border-color" : "green",
-				"width": "76.563px"
+				"width": "87.563px",
+				"color": "white !important"
 			
 			});
+
+			$("#follow-button").click(function(){
+
+				makeAFollowingActionOnThisUser(thisUsersMpInfo.id, thisMpPageInfo.id, "deleteConnection").then(function(){
+
+					$("#follow-button").remove()
+
+					followFeatureOrchestration ()
+					
+				})
+
+			})
 
 			console.log("add the unfollow button here")
 
@@ -73,7 +100,7 @@ function followFeatureOrchestration (){
 
 	console.log("I'm in the orchestration and following feature")
 
-	return amIFollowingThisUser(thisUsersMpInfo.id, thisMpPageInfo.id)
+	return makeAFollowingActionOnThisUser(thisUsersMpInfo.id, thisMpPageInfo.id, "status")
 
 	.then(function(response){
 
@@ -170,7 +197,7 @@ function thisUsersFeed (baseUrl, userId){
 
 		console.log(thisDate)
 		
-		thisTableSelector.append("<tr class='route-row'><td>" + thisTickRow.fields.date + "</td><td><a href='" + thisTickRow.fields.route_url +  "'>" + thisTickRow.fields.route_name + "</a></td><td>"+ thisTickRow.fields.creator + "</td></tr>")
+		thisTableSelector.append("<tr class='route-row'><td>" + thisTickRow.fields.date + "</td><td><a href='" + thisTickRow.fields.route_url +  "'>" + thisTickRow.fields.route_name + "</a></td><td>"+ thisTickRow.fields.user_name_from_mp + "</td></tr>")
 
 	}
 
