@@ -4,7 +4,7 @@
 	"description": "Build an Extension!",
 	"permissions": ["activeTab", "tabs", "declarativeContent", "storage", "*://mpes-brooksryan.c9users.io/*"],
 	"background": {
-		"scripts": ["backgroundAchievementList.js", "background.js"],
+		"scripts": ["background.js"],
 		"persistent": false
 	},
 	"web_accessible_resources": [
@@ -21,7 +21,7 @@
         		"csvJSON.js", 
         		"contentscript.js", 
         		"staticAchievementsAndLists.js", 
-        		"checkAchievements.js", 
+        		
         		"getUserTicks.js", 
         		"displayAchievements.js", 
         		"saveTickList.js", 
