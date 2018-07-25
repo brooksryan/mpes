@@ -1,7 +1,7 @@
 {
-	"name": "Mountain Project Ehancement Suite",
-	"version": "0.1",
-	"description": "Build an Extension!",
+	"name": "BETA Mountain Project Ehancement Suite",
+	"version": "0.3",
+	"description": "v0.3.1 ui changes",
 	"permissions": ["activeTab", "tabs", "declarativeContent", "storage", "*://mpes-brooksryan.c9users.io/*"],
 	"background": {
 		"scripts": ["background.js"],
@@ -20,7 +20,6 @@
         		"jquery.js",
         		"csvJSON.js", 
         		"contentscript.js",         		
-        		"saveAllTicksFromPage.js",
         		"isThisRouteClassic.js",
         		"followFeature.js",
         		"orchestration.js"],
