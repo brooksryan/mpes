@@ -107,11 +107,19 @@ function followFeatureOrchestration() {
 
 // -------- SECTION FOR IS FOR FOLLOWING FEED --------- //
 
-function thisUsersFeed(baseUrl, userId) {
+function thisUsersFeed(baseUrl, userId, currentPageNumber) {
 
     this.userId = userId;
 
-    this.currentPageNumber = 1;
+    this.currentPageNumber = currentPageNumber;
+
+    this.hasMorePages;
+
+    this.hasPreviousPages;
+
+    this.nextPageNumber;
+
+    this.previousPageNumber;
 
     this.feedUrl = baseUrl + "users/tickFeed/" + this.userId + "/" + this.currentPageNumber;
 
@@ -123,15 +131,47 @@ function thisUsersFeed(baseUrl, userId) {
 
             $.get(feedUrl, function(data) {
 
-                    thisUsersFollowingTicks = (JSON.parse(data));
+                    thisFeedData = data.feedItems;
 
-                    // this.prependFriendTicksTable
+                    thisFeedsTicks = (JSON.parse(thisFeedData));
 
-                    thisUsersFollowingTicks.forEach(function(line) {
+                    thisFeedsTicks.forEach(function(line) {
 
                         that.eachTickFormatting(line);
 
                     });
+
+                    // that.currentPageNumber = data.currentPageNumber;
+
+
+                    // if (data.hasNextPage ===);
+                    if (data.hasNextPage == true) {
+
+                    	that.hasMorePages = true
+
+                    	that.nextPageNumber = that.currentPageNumber + 1
+
+                    }
+
+                    else {
+
+                    	that.hasMorePages = false
+
+                    }
+
+                    if (data.hasPreviousPage == true) {
+
+                    	that.hasPreviousPages = true
+
+                    	that.previousPageNumber = that.currentPageNumber - 1
+
+                    }
+
+                    else {
+
+                    	that.hasPreviousPages = false
+
+                    }
 
                     resolve(data);
 
@@ -154,7 +194,7 @@ function thisUsersFeed(baseUrl, userId) {
             .first()
             .prepend(
 
-            `
+             `
             <div id="feedId" class="row"> 
 				<div class="col-xs-12"> 
 					<div class="title-with-border-bottom mb-2 mt-1">
@@ -163,7 +203,7 @@ function thisUsersFeed(baseUrl, userId) {
 					</div>
 					<div class="table-responsive max-height max-height-md-none max-height-xs-300""
 						<div class="col-xs-12">
-							<table class="table table-sm table-striped hidden-xs-down"> 
+							<table class="table table-sm table-striped"> 
 								<thead>	
 									<tr id = "feedTableHeads" class="route-row">
 										<th>Date</th>
@@ -176,6 +216,11 @@ function thisUsersFeed(baseUrl, userId) {
 							</table>
 						</div>
 					</div>
+				<div class="col-xs-12">
+					<nav id="navigationList" aria-label="Page navigation example">
+  						<ul class="pagination">
+  						</ul>
+  					</nav>					
 				</div>
 			</div>
 			`
@@ -186,22 +231,37 @@ function thisUsersFeed(baseUrl, userId) {
             "color": "black",
             "background-color": "white",
 
-        })
-    }
+        });
+    };
 
     this.eachTickFormatting = function(thisTickRow) {
 
-        var thisTableSelector = $("#followerTickTable")
+        var thisTableSelector = $("#followerTickTable");
 
-        var thisDate = thisTickRow.fields.date
+        var thisDate = thisTickRow.fields.date;
 
-        thisTableSelector.append("<tr class='route-row'><td>" + thisTickRow.fields.date + "</td><td><a href='" + thisTickRow.fields.route_url + "'>" + thisTickRow.fields.route_name + "</a></td><td>" + thisTickRow.fields.user_name_from_mp + "</td></tr>")
+        thisTableSelector.append("<tr class='route-row'><td>" + thisTickRow.fields.date + "</td><td><a href='" + thisTickRow.fields.route_url + "'>" + thisTickRow.fields.route_name + "</a></td><td>" + thisTickRow.fields.user_name_from_mp + "</td></tr>");
 
     };
-    this.loadingImageHtmlToAppend = `<div id="loadingImage" class="col-xs-12 blink"> Loading... </div>`
+    this.loadingImageHtmlToAppend = `<div id="loadingImage" class="col-xs-12 blink"> Loading... </div>`;
+
+    this.navPreviousButtonHtmlToAppend = 
+    	`		
+	    <li id="previousItem" class="page-item my-nav-buttons">
+	    	<a class="page-link">Previous</a>
+	    </li>
+
+    	`;
+
+    this.navNextButtonHtmlToAppend = 
+    	`
+    	<li id="nextItem" class="page-item my-nav-buttons">
+			<a class="page-link">Next</a>
+		</li>
+		`
 
     this.appendLoadingImage = function() {
-        that = this
+        that = this;
 
         $('div#feedId').append(
 
@@ -219,7 +279,7 @@ function thisUsersFeed(baseUrl, userId) {
 
             $(".blink").fadeOut(300).fadeIn(300);
 
-        }, 500)
+        }, 500);
 
     };
 
@@ -229,22 +289,68 @@ function thisUsersFeed(baseUrl, userId) {
 
     };
 
+    this.addNavigationButtons = function() {
+
+    	if (this.hasPreviousPages){
+    	
+    	    $('nav#navigationList > ul').append(this.navPreviousButtonHtmlToAppend)
+    	};
+
+    	if (this.hasMorePages) {
+
+    		$('nav#navigationList > ul').append(this.navNextButtonHtmlToAppend)
+    	
+    	}
+
+    };
+
+
+
 }
 
-function thisUserFeedOrchestration(baseUrl, mpUserId) {
+var nextPage = 1;
 
-    thisNewFeed = new thisUsersFeed(baseUrl, mpUserId)
+function thisUserFeedOrchestration(baseUrl, mpUserId, pageNumber) {
 
-    thisNewFeed.prependFriendTicksTable()
+    thisNewFeed = new thisUsersFeed(baseUrl, mpUserId, pageNumber);
 
-    thisNewFeed.appendLoadingImage()
+    thisNewFeed.prependFriendTicksTable();
 
-    return thisNewFeed.userFeed(thisNewFeed.feedUrl).then(function(response) {
+    thisNewFeed.appendLoadingImage();
 
-        console.log("I'm done")
+    return thisNewFeed.userFeed(thisNewFeed.feedUrl)
 
-        thisNewFeed.removeLoadingImage()
+        .then(function(response) {
 
-    })
+            thisNewFeed.removeLoadingImage();
+
+            thisNewFeed.addNavigationButtons()
+
+        })
+
+        .then(function() {
+
+        	$("#nextItem").click(function() {
+
+        		$(".my-nav-buttons").remove()
+
+                $("#feedId").remove()
+
+                thisUserFeedOrchestration(baseUrl, mpUserId, thisNewFeed.nextPageNumber)
+
+            });
+
+            $("#previousItem").click(function() {
+
+        		$(".my-nav-buttons").remove()
+
+                $("#feedId").remove()
+
+                thisUserFeedOrchestration(baseUrl, mpUserId, thisNewFeed.previousPageNumber)
+
+
+            });
+
+        });
 
 }
