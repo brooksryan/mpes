@@ -2,160 +2,160 @@
 // takes my mpId and checks to see if I am following
 // the user whose page I'm on 
 
-function makeAFollowingActionOnThisUser (loggedInUserId, userToBeFollowedId, verb) {
+function makeAFollowingActionOnThisUser(loggedInUserId, userToBeFollowedId, verb) {
 
-	queryURL = "https://mpes-brooksryan.c9users.io/users/" + verb + "/" + loggedInUserId + "/" + userToBeFollowedId +"/"
+    queryURL = "https://mpes-brooksryan.c9users.io/users/" + verb + "/" + loggedInUserId + "/" + userToBeFollowedId + "/";
 
-		return new Promise(function(resolve, reject){
+    return new Promise(function(resolve, reject) {
 
-			$.get(queryURL,function(data){
+        $.get(queryURL, function(data) {
 
-				resolve(data);
+                resolve(data);
 
-		  	})
-		  	
-		  	.fail(function(data) {
-				
-				reject(data);
-				
-			})
+            })
 
-		})
+            .fail(function(data) {
 
-}
+                reject(data);
 
-function addFollowStatusAndInteraction (followStatus) {
+            });
 
-	return new Promise(function(resolve, reject){
-
-		if (followStatus === "False"){
-
-			var followURL = "https://mpes-brooksryan.c9users.io/users/createNewConnection/" + thisUsersMpInfo.id + "/" + thisMpPageInfo.id +"/"
-			
-			$("div.info > div.mt-1").eq(0).after('<div class="mt-1"> <a class="btn btn-sm btn-primary" id = "follow-button"> Follow </a></div>')
-
-			$("#follow-button").css({
-
-				"background-color" : "green", 
-				"border-color" : "green",
-				"width": "87.563px",
-				"color": "white !important"
-			
-			});
-
-			$("#follow-button").click(function(){
-
-				makeAFollowingActionOnThisUser(thisUsersMpInfo.id, thisMpPageInfo.id, "createNewConnection").then(function(){
-
-					$("#follow-button").remove()
-
-					followFeatureOrchestration ()
-					
-				})
-
-			})
-
-			resolve("Done")
-
-		} else {
-
-			//var unFollowURL = "https://mpes-brooksryan.c9users.io/users/deleteConnection/" + thisUsersMpInfo.id + "/" + thisMpPageInfo.id +"/"
-
-			$("div.info > div.mt-1").eq(0).after('<div class="mt-1"> <a class="btn btn-sm btn-primary" id = "follow-button"> Unfollow </a></div>')
-
-			$("#follow-button").css({
-
-				"background-color" : "green", 
-				"border-color" : "green",
-				"width": "87.563px",
-				"color": "white !important"
-			
-			});
-
-			$("#follow-button").click(function(){
-
-				makeAFollowingActionOnThisUser(thisUsersMpInfo.id, thisMpPageInfo.id, "deleteConnection").then(function(){
-
-					$("#follow-button").remove()
-
-					followFeatureOrchestration ()
-					
-				})
-
-			})
-
-			resolve("unfollow button added")
-
-		}
-	})
+    });
 
 }
 
-function followFeatureOrchestration (){
+function addFollowStatusAndInteraction(followStatus) {
 
-	return makeAFollowingActionOnThisUser(thisUsersMpInfo.id, thisMpPageInfo.id, "status")
+    return new Promise(function(resolve, reject) {
 
-	.then(function(response){
+        if (followStatus === "False") {
 
-		return addFollowStatusAndInteraction(response);
+            var followURL = "https://mpes-brooksryan.c9users.io/users/createNewConnection/" + thisUsersMpInfo.id + "/" + thisMpPageInfo.id + "/";
+
+            $("div.info > div.mt-1").eq(0).after('<div class="mt-1"> <a class="btn btn-sm btn-primary" id = "follow-button"> Follow </a></div>');
+
+            $("#follow-button").css({
+
+                "background-color": "green",
+                "border-color": "green",
+                "width": "87.563px",
+                "color": "white !important"
+
+            });
+
+            $("#follow-button").click(function() {
+
+                makeAFollowingActionOnThisUser(thisUsersMpInfo.id, thisMpPageInfo.id, "createNewConnection").then(function() {
+
+                    $("#follow-button").remove();
+
+                    followFeatureOrchestration();
+
+                });
+
+            });
+
+            resolve("Done");
+
+        } else {
+
+            //var unFollowURL = "https://mpes-brooksryan.c9users.io/users/deleteConnection/" + thisUsersMpInfo.id + "/" + thisMpPageInfo.id +"/"
+
+            $("div.info > div.mt-1").eq(0).after('<div class="mt-1"> <a class="btn btn-sm btn-primary" id = "follow-button"> Unfollow </a></div>');
+
+            $("#follow-button").css({
+
+                "background-color": "green",
+                "border-color": "green",
+                "width": "87.563px",
+                "color": "white !important"
+
+            });
+
+            $("#follow-button").click(function() {
+
+                makeAFollowingActionOnThisUser(thisUsersMpInfo.id, thisMpPageInfo.id, "deleteConnection").then(function() {
+
+                    $("#follow-button").remove();
+
+                    followFeatureOrchestration();
+
+                });
+
+            });
+
+            resolve("unfollow button added");
+
+        }
+    });
+
+}
+
+function followFeatureOrchestration() {
+
+    return makeAFollowingActionOnThisUser(thisUsersMpInfo.id, thisMpPageInfo.id, "status")
+
+        .then(function(response) {
+
+            return addFollowStatusAndInteraction(response);
 
 
-	})
+        });
 
 }
 
 
 // -------- SECTION FOR IS FOR FOLLOWING FEED --------- //
 
-function thisUsersFeed (baseUrl, userId){
+function thisUsersFeed(baseUrl, userId) {
 
-	this.userId = userId
+    this.userId = userId;
 
-	this.currentPageNumber = 1 
+    this.currentPageNumber = 1;
 
-	this.feedUrl = baseUrl + "users/tickFeed/" + this.userId + "/" + this.currentPageNumber
+    this.feedUrl = baseUrl + "users/tickFeed/" + this.userId + "/" + this.currentPageNumber;
 
-	this.userFeed = function(feedUrl){
+    this.userFeed = function(feedUrl) {
 
-		var that = this
+        var that = this;
 
-		return new Promise(function(resolve, reject){
+        return new Promise(function(resolve, reject) {
 
-			$.get(feedUrl,function(data){
+            $.get(feedUrl, function(data) {
 
-				thisUsersFollowingTicks = (JSON.parse(data));
+                    thisUsersFollowingTicks = (JSON.parse(data));
 
-				// this.prependFriendTicksTable
+                    // this.prependFriendTicksTable
 
-				thisUsersFollowingTicks.forEach(function(line){
+                    thisUsersFollowingTicks.forEach(function(line) {
 
-					that.eachTickFormatting(line)
+                        that.eachTickFormatting(line);
 
-				})
+                    });
 
-				resolve(data);
+                    resolve(data);
 
-		  	})
-		  	
-		  	.fail(function() {
-				
-				reject(data);
-				
-			})
+                })
 
-		})
+                .fail(function() {
+
+                    reject(data);
+
+                });
+
+        });
 
 
-	}
+    };
 
-	this.prependFriendTicksTable = function(){
-	
-		$("div#homepage-climb-bottom .col-xs-12")
-		.first()
-		.prepend(
-			
-			`
-			<div id="feedId" class="row"> 
+    this.prependFriendTicksTable = function() {
+
+        $("div#homepage-climb-bottom .col-xs-12")
+            .first()
+            .prepend(
+
+            `
+            <div id="feedId" class="row"> 
 				<div class="col-xs-12"> 
 					<div class="title-with-border-bottom mb-2 mt-1">
 						<h2> Your Friends Have Been Busy 
@@ -179,73 +179,72 @@ function thisUsersFeed (baseUrl, userId){
 				</div>
 			</div>
 			`
-			)
+            );
 
-			$('#feedTableHeads>th').css({
+        $('#feedTableHeads>th').css({
 
-				"color": "black",
-				"background-color": "white",
+            "color": "black",
+            "background-color": "white",
 
-			})
-		}
+        })
+    }
 
-	this.eachTickFormatting = function(thisTickRow){
+    this.eachTickFormatting = function(thisTickRow) {
 
-		var thisTableSelector = $("#followerTickTable")
+        var thisTableSelector = $("#followerTickTable")
 
-		var thisDate = thisTickRow.fields.date
-		
-		thisTableSelector.append("<tr class='route-row'><td>" + thisTickRow.fields.date + "</td><td><a href='" + thisTickRow.fields.route_url +  "'>" + thisTickRow.fields.route_name + "</a></td><td>"+ thisTickRow.fields.user_name_from_mp + "</td></tr>")
+        var thisDate = thisTickRow.fields.date
 
-	}
-	this.loadingImageHtmlToAppend = `<div id="loadingImage" class="col-xs-12 blink"> Loading... </div>`
+        thisTableSelector.append("<tr class='route-row'><td>" + thisTickRow.fields.date + "</td><td><a href='" + thisTickRow.fields.route_url + "'>" + thisTickRow.fields.route_name + "</a></td><td>" + thisTickRow.fields.user_name_from_mp + "</td></tr>")
 
-	this.appendLoadingImage = function(){
-		that = this
-		
-		$('div#feedId').append(
+    };
+    this.loadingImageHtmlToAppend = `<div id="loadingImage" class="col-xs-12 blink"> Loading... </div>`
 
-			that.loadingImageHtmlToAppend
+    this.appendLoadingImage = function() {
+        that = this
 
-		)
+        $('div#feedId').append(
 
-		$("#loadingImage").css({
+            that.loadingImageHtmlToAppend
 
-			"text-align": "center",
-  				
-		});
+        );
 
-		setInterval(function(){
-		
-			$(".blink").fadeOut(300).fadeIn(300);
-		
-		}, 500)
+        $("#loadingImage").css({
 
-	}
+            "text-align": "center",
 
-	this.removeLoadingImage = function(stuffToRemove){
-		
-		$('#loadingImage').remove()
+        });
 
-	}
+        setInterval(function() {
 
-}
+            $(".blink").fadeOut(300).fadeIn(300);
 
-function thisUserFeedOrchestration(baseUrl, mpUserId){
+        }, 500)
 
-	thisNewFeed = new thisUsersFeed(baseUrl,mpUserId)
+    };
 
-	thisNewFeed.prependFriendTicksTable()
+    this.removeLoadingImage = function(stuffToRemove) {
 
-	thisNewFeed.appendLoadingImage()
+        $('#loadingImage').remove();
 
-	return thisNewFeed.userFeed(thisNewFeed.feedUrl).then(function(response){
-
-		console.log("I'm done")
-		
-		thisNewFeed.removeLoadingImage()
-	
-	})
+    };
 
 }
 
+function thisUserFeedOrchestration(baseUrl, mpUserId) {
+
+    thisNewFeed = new thisUsersFeed(baseUrl, mpUserId)
+
+    thisNewFeed.prependFriendTicksTable()
+
+    thisNewFeed.appendLoadingImage()
+
+    return thisNewFeed.userFeed(thisNewFeed.feedUrl).then(function(response) {
+
+        console.log("I'm done")
+
+        thisNewFeed.removeLoadingImage()
+
+    })
+
+}

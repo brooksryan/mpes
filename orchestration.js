@@ -18,6 +18,8 @@ var thisBaseUrl = "https://mpes-brooksryan.c9users.io/"
 //STUFF TO DO IF I'M ON MY OWN PAGE
 if (isThisTheLoggedInUser() === true ) {
 
+
+
 }
 
 // STUFF TO DO IF YOU'RE ON A ROUTE PAGE
