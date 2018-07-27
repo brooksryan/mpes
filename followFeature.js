@@ -32,13 +32,13 @@ function addFollowStatusAndInteraction(followStatus) {
 
             var followURL = "https://mpes-brooksryan.c9users.io/users/createNewConnection/" + thisUsersMpInfo.id + "/" + thisMpPageInfo.id + "/";
 
-            $("div.info > div.mt-1").eq(0).after('<div class="mt-1"> <a class="btn btn-sm btn-primary" id = "follow-button"> Follow </a></div>');
+            $("div.info > div.mt-1").eq(0).after('<div class="mt-1"> <a href="" class="btn btn-sm btn-primary follow-button"> Follow </a></div>');
 
-            $("#follow-button").css({
+            $(".follow-button").css({
 
                 "background-color": "green",
                 "border-color": "green",
-                "width": "87.563px",
+                "width": "95.563px",
                 "color": "white !important"
 
             });
@@ -61,13 +61,13 @@ function addFollowStatusAndInteraction(followStatus) {
 
             //var unFollowURL = "https://mpes-brooksryan.c9users.io/users/deleteConnection/" + thisUsersMpInfo.id + "/" + thisMpPageInfo.id +"/"
 
-            $("div.info > div.mt-1").eq(0).after('<div class="mt-1"> <a class="btn btn-sm btn-primary" id = "follow-button"> Unfollow </a></div>');
+            $("div.info > div.mt-1").eq(0).after('<div class="mt-1"> <a href="" class="btn btn-sm btn-primary follow-button"> Unfollow </a></div>');
 
-            $("#follow-button").css({
+            $(".follow-button").css({
 
                 "background-color": "green",
                 "border-color": "green",
-                "width": "87.563px",
+                "width": "95.563px",
                 "color": "white !important"
 
             });
@@ -147,29 +147,25 @@ function thisUsersFeed(baseUrl, userId, currentPageNumber) {
                     // if (data.hasNextPage ===);
                     if (data.hasNextPage == true) {
 
-                    	that.hasMorePages = true
+                        that.hasMorePages = true
 
-                    	that.nextPageNumber = that.currentPageNumber + 1
+                        that.nextPageNumber = that.currentPageNumber + 1
 
-                    }
+                    } else {
 
-                    else {
-
-                    	that.hasMorePages = false
+                        that.hasMorePages = false
 
                     }
 
                     if (data.hasPreviousPage == true) {
 
-                    	that.hasPreviousPages = true
+                        that.hasPreviousPages = true
 
-                    	that.previousPageNumber = that.currentPageNumber - 1
+                        that.previousPageNumber = that.currentPageNumber - 1
 
-                    }
+                    } else {
 
-                    else {
-
-                    	that.hasPreviousPages = false
+                        that.hasPreviousPages = false
 
                     }
 
@@ -194,7 +190,7 @@ function thisUsersFeed(baseUrl, userId, currentPageNumber) {
             .first()
             .prepend(
 
-             `
+                `
             <div id="feedId" class="row"> 
 				<div class="col-xs-12"> 
 					<div class="title-with-border-bottom mb-2 mt-1">
@@ -245,16 +241,16 @@ function thisUsersFeed(baseUrl, userId, currentPageNumber) {
     };
     this.loadingImageHtmlToAppend = `<div id="loadingImage" class="col-xs-12 blink"> Loading... </div>`;
 
-    this.navPreviousButtonHtmlToAppend = 
-    	`		
+    this.navPreviousButtonHtmlToAppend =
+        `		
 	    <li id="previousItem" class="page-item my-nav-buttons">
 	    	<a class="page-link">Previous</a>
 	    </li>
 
     	`;
 
-    this.navNextButtonHtmlToAppend = 
-    	`
+    this.navNextButtonHtmlToAppend =
+        `
     	<li id="nextItem" class="page-item my-nav-buttons">
 			<a class="page-link">Next</a>
 		</li>
@@ -291,24 +287,20 @@ function thisUsersFeed(baseUrl, userId, currentPageNumber) {
 
     this.addNavigationButtons = function() {
 
-    	if (this.hasPreviousPages){
-    	
-    	    $('nav#navigationList > ul').append(this.navPreviousButtonHtmlToAppend)
-    	};
+        if (this.hasPreviousPages) {
 
-    	if (this.hasMorePages) {
+            $('nav#navigationList > ul').append(this.navPreviousButtonHtmlToAppend)
+        };
 
-    		$('nav#navigationList > ul').append(this.navNextButtonHtmlToAppend)
-    	
-    	}
+        if (this.hasMorePages) {
+
+            $('nav#navigationList > ul').append(this.navNextButtonHtmlToAppend)
+
+        }
 
     };
 
-
-
 }
-
-var nextPage = 1;
 
 function thisUserFeedOrchestration(baseUrl, mpUserId, pageNumber) {
 
@@ -330,9 +322,9 @@ function thisUserFeedOrchestration(baseUrl, mpUserId, pageNumber) {
 
         .then(function() {
 
-        	$("#nextItem").click(function() {
+            $("#nextItem").click(function() {
 
-        		$(".my-nav-buttons").remove()
+                $(".my-nav-buttons").remove()
 
                 $("#feedId").remove()
 
@@ -342,7 +334,7 @@ function thisUserFeedOrchestration(baseUrl, mpUserId, pageNumber) {
 
             $("#previousItem").click(function() {
 
-        		$(".my-nav-buttons").remove()
+                $(".my-nav-buttons").remove()
 
                 $("#feedId").remove()
 

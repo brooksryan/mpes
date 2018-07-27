@@ -1,7 +1,7 @@
 {
-	"name": "BETA Mountain Project Ehancement Suite",
+	"name": "Mountain Project Ehancement Suite",
 	"version": "0.3",
-	"description": "v0.3.1 ui changes",
+	"description": "An extension to improve your Mountain Project Experience",
 	"permissions": ["activeTab", "tabs", "declarativeContent", "storage", "*://mpes-brooksryan.c9users.io/*"],
 	"background": {
 		"scripts": ["background.js"],
@@ -26,21 +26,6 @@
         "run_at": "document_end"
         }
     ],
-	// "page_action": {
- //      "default_popup": "popup.html",
- //      "default_icon": {
- //        "16": "images/get_started16.png",
- //        "32": "images/get_started32.png",
- //        "48": "images/get_started48.png",
- //        "128": "images/get_started128.png"
- //      }
- //    },
- //    "options_page": "options.html",
- //     "icons": {
- //      "16": "images/get_started16.png",
- //      "32": "images/get_started32.png",
- //      "48": "images/get_started48.png",
- //      "128": "images/get_started128.png"
- //    },
+
 	"manifest_version": 2
 }
