@@ -32,13 +32,13 @@ function addFollowStatusAndInteraction(followStatus) {
 
             var followURL = "https://mpes-brooksryan.c9users.io/users/createNewConnection/" + thisUsersMpInfo.id + "/" + thisMpPageInfo.id + "/";
 
-            $("div.info > div.mt-1").eq(0).after('<div class="mt-1"> <a class="btn btn-sm btn-primary" id = "follow-button"> Follow </a></div>');
+            $("div.info > div.mt-1").eq(0).after('<div class="mt-1"> <a href="" class="btn btn-sm btn-primary follow-button"> Follow </a></div>');
 
-            $("#follow-button").css({
+            $(".follow-button").css({
 
                 "background-color": "green",
                 "border-color": "green",
-                "width": "87.563px",
+                "width": "95.563px",
                 "color": "white !important"
 
             });
@@ -61,13 +61,13 @@ function addFollowStatusAndInteraction(followStatus) {
 
             //var unFollowURL = "https://mpes-brooksryan.c9users.io/users/deleteConnection/" + thisUsersMpInfo.id + "/" + thisMpPageInfo.id +"/"
 
-            $("div.info > div.mt-1").eq(0).after('<div class="mt-1"> <a class="btn btn-sm btn-primary" id = "follow-button"> Unfollow </a></div>');
+            $("div.info > div.mt-1").eq(0).after('<div class="mt-1"> <a href="" class="btn btn-sm btn-primary follow-button"> Unfollow </a></div>');
 
-            $("#follow-button").css({
+            $(".follow-button").css({
 
                 "background-color": "green",
                 "border-color": "green",
-                "width": "87.563px",
+                "width": "95.563px",
                 "color": "white !important"
 
             });
@@ -107,11 +107,19 @@ function followFeatureOrchestration() {
 
 // -------- SECTION FOR IS FOR FOLLOWING FEED --------- //
 
-function thisUsersFeed(baseUrl, userId) {
+function thisUsersFeed(baseUrl, userId, currentPageNumber) {
 
     this.userId = userId;
 
-    this.currentPageNumber = 1;
+    this.currentPageNumber = currentPageNumber;
+
+    this.hasMorePages;
+
+    this.hasPreviousPages;
+
+    this.nextPageNumber;
+
+    this.previousPageNumber;
 
     this.feedUrl = baseUrl + "users/tickFeed/" + this.userId + "/" + this.currentPageNumber;
 
@@ -123,15 +131,43 @@ function thisUsersFeed(baseUrl, userId) {
 
             $.get(feedUrl, function(data) {
 
-                    thisUsersFollowingTicks = (JSON.parse(data));
+                    thisFeedData = data.feedItems;
 
-                    // this.prependFriendTicksTable
+                    thisFeedsTicks = (JSON.parse(thisFeedData));
 
-                    thisUsersFollowingTicks.forEach(function(line) {
+                    thisFeedsTicks.forEach(function(line) {
 
                         that.eachTickFormatting(line);
 
                     });
+
+                    // that.currentPageNumber = data.currentPageNumber;
+
+
+                    // if (data.hasNextPage ===);
+                    if (data.hasNextPage == true) {
+
+                        that.hasMorePages = true
+
+                        that.nextPageNumber = that.currentPageNumber + 1
+
+                    } else {
+
+                        that.hasMorePages = false
+
+                    }
+
+                    if (data.hasPreviousPage == true) {
+
+                        that.hasPreviousPages = true
+
+                        that.previousPageNumber = that.currentPageNumber - 1
+
+                    } else {
+
+                        that.hasPreviousPages = false
+
+                    }
 
                     resolve(data);
 
@@ -154,7 +190,7 @@ function thisUsersFeed(baseUrl, userId) {
             .first()
             .prepend(
 
-            `
+                `
             <div id="feedId" class="row"> 
 				<div class="col-xs-12"> 
 					<div class="title-with-border-bottom mb-2 mt-1">
@@ -163,7 +199,7 @@ function thisUsersFeed(baseUrl, userId) {
 					</div>
 					<div class="table-responsive max-height max-height-md-none max-height-xs-300""
 						<div class="col-xs-12">
-							<table class="table table-sm table-striped hidden-xs-down"> 
+							<table class="table table-sm table-striped"> 
 								<thead>	
 									<tr id = "feedTableHeads" class="route-row">
 										<th>Date</th>
@@ -176,6 +212,11 @@ function thisUsersFeed(baseUrl, userId) {
 							</table>
 						</div>
 					</div>
+				<div class="col-xs-12">
+					<nav id="navigationList" aria-label="Page navigation example">
+  						<ul class="pagination">
+  						</ul>
+  					</nav>					
 				</div>
 			</div>
 			`
@@ -186,22 +227,37 @@ function thisUsersFeed(baseUrl, userId) {
             "color": "black",
             "background-color": "white",
 
-        })
-    }
+        });
+    };
 
     this.eachTickFormatting = function(thisTickRow) {
 
-        var thisTableSelector = $("#followerTickTable")
+        var thisTableSelector = $("#followerTickTable");
 
-        var thisDate = thisTickRow.fields.date
+        var thisDate = thisTickRow.fields.date;
 
-        thisTableSelector.append("<tr class='route-row'><td>" + thisTickRow.fields.date + "</td><td><a href='" + thisTickRow.fields.route_url + "'>" + thisTickRow.fields.route_name + "</a></td><td>" + thisTickRow.fields.user_name_from_mp + "</td></tr>")
+        thisTableSelector.append("<tr class='route-row'><td>" + thisTickRow.fields.date + "</td><td><a href='" + thisTickRow.fields.route_url + "'>" + thisTickRow.fields.route_name + "</a></td><td>" + thisTickRow.fields.user_name_from_mp + "</td></tr>");
 
     };
-    this.loadingImageHtmlToAppend = `<div id="loadingImage" class="col-xs-12 blink"> Loading... </div>`
+    this.loadingImageHtmlToAppend = `<div id="loadingImage" class="col-xs-12 blink"> Loading... </div>`;
+
+    this.navPreviousButtonHtmlToAppend =
+        `		
+	    <li id="previousItem" class="page-item my-nav-buttons">
+	    	<a class="page-link">Previous</a>
+	    </li>
+
+    	`;
+
+    this.navNextButtonHtmlToAppend =
+        `
+    	<li id="nextItem" class="page-item my-nav-buttons">
+			<a class="page-link">Next</a>
+		</li>
+		`
 
     this.appendLoadingImage = function() {
-        that = this
+        that = this;
 
         $('div#feedId').append(
 
@@ -219,7 +275,7 @@ function thisUsersFeed(baseUrl, userId) {
 
             $(".blink").fadeOut(300).fadeIn(300);
 
-        }, 500)
+        }, 500);
 
     };
 
@@ -229,22 +285,64 @@ function thisUsersFeed(baseUrl, userId) {
 
     };
 
+    this.addNavigationButtons = function() {
+
+        if (this.hasPreviousPages) {
+
+            $('nav#navigationList > ul').append(this.navPreviousButtonHtmlToAppend)
+        };
+
+        if (this.hasMorePages) {
+
+            $('nav#navigationList > ul').append(this.navNextButtonHtmlToAppend)
+
+        }
+
+    };
+
 }
 
-function thisUserFeedOrchestration(baseUrl, mpUserId) {
+function thisUserFeedOrchestration(baseUrl, mpUserId, pageNumber) {
 
-    thisNewFeed = new thisUsersFeed(baseUrl, mpUserId)
+    thisNewFeed = new thisUsersFeed(baseUrl, mpUserId, pageNumber);
 
-    thisNewFeed.prependFriendTicksTable()
+    thisNewFeed.prependFriendTicksTable();
 
-    thisNewFeed.appendLoadingImage()
+    thisNewFeed.appendLoadingImage();
 
-    return thisNewFeed.userFeed(thisNewFeed.feedUrl).then(function(response) {
+    return thisNewFeed.userFeed(thisNewFeed.feedUrl)
 
-        console.log("I'm done")
+        .then(function(response) {
 
-        thisNewFeed.removeLoadingImage()
+            thisNewFeed.removeLoadingImage();
 
-    })
+            thisNewFeed.addNavigationButtons()
+
+        })
+
+        .then(function() {
+
+            $("#nextItem").click(function() {
+
+                $(".my-nav-buttons").remove()
+
+                $("#feedId").remove()
+
+                thisUserFeedOrchestration(baseUrl, mpUserId, thisNewFeed.nextPageNumber)
+
+            });
+
+            $("#previousItem").click(function() {
+
+                $(".my-nav-buttons").remove()
+
+                $("#feedId").remove()
+
+                thisUserFeedOrchestration(baseUrl, mpUserId, thisNewFeed.previousPageNumber)
+
+
+            });
+
+        });
 
 }
