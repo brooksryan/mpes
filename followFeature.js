@@ -10,8 +10,6 @@ function makeAFollowingActionOnThisUser(loggedInUserId, userToBeFollowedId, verb
 
         $.get(queryURL, function(data) {
 
-        		console.log(data)
-
                 resolve(data);
 
             })
@@ -33,8 +31,6 @@ function addFollowStatusAndInteraction(followStatus) {
         if (followStatus === "False") {
 
             var followURL = "https://mpes-brooksryan.c9users.io/users/createNewConnection/" + thisUsersMpInfo.id + "/" + thisMpPageInfo.id + "/";
-
-            console.log(thisUsersMpInfo.id, thisMpPageInfo.id)
 
             $("div.info > div.mt-1").eq(0).after('<div class="mt-1"> <a a href="#" class="btn btn-sm btn-primary follow-button"> Follow </a></div>');
 
