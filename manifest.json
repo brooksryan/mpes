@@ -1,6 +1,6 @@
 {
 	"name": "BETA Mountain Project Ehancement Suite",
-	"version": "1.0",
+	"version": "1.1",
 	"description": "An extension to improve your Mountain Project Experience",
 	"permissions": ["activeTab", "tabs", "declarativeContent", "storage", "*://*.mpes-serve.com/*"],
 	"background": {
