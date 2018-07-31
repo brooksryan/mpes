@@ -12,7 +12,7 @@ var thisUrlIsTheCurrentPage = whatPageAmIOn()
 
 var thisPageDetails = returnIdForMountainProjectPage(thisUrlIsTheCurrentPage);
 
-var thisBaseUrl = "https://mpes-brooksryan.c9users.io/"
+var thisBaseUrl = mpesBaseUrl
 
 
 //STUFF TO DO IF I'M ON MY OWN PAGE

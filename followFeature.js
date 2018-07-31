@@ -4,7 +4,7 @@
 
 function makeAFollowingActionOnThisUser(loggedInUserId, userToBeFollowedId, verb) {
 
-    queryURL = "https://mpes-brooksryan.c9users.io/users/" + verb + "/" + loggedInUserId + "/" + userToBeFollowedId + "/";
+    queryURL = mpesBaseUrl + "users/" + verb + "/" + loggedInUserId + "/" + userToBeFollowedId + "/";
 
     return new Promise(function(resolve, reject) {
 
@@ -30,7 +30,7 @@ function addFollowStatusAndInteraction(followStatus) {
 
         if (followStatus === "False") {
 
-            var followURL = "https://mpes-brooksryan.c9users.io/users/createNewConnection/" + thisUsersMpInfo.id + "/" + thisMpPageInfo.id + "/";
+            var followURL = mpesBaseUrl + "users/createNewConnection/" + thisUsersMpInfo.id + "/" + thisMpPageInfo.id + "/";
 
             $("div.info > div.mt-1").eq(0).after('<div class="mt-1"> <a a href="#" class="btn btn-sm btn-primary follow-button"> Follow </a></div>');
 

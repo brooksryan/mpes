@@ -1,8 +1,8 @@
 {
 	"name": "Mountain Project Ehancement Suite",
-	"version": "0.3",
+	"version": "1.0",
 	"description": "An extension to improve your Mountain Project Experience",
-	"permissions": ["activeTab", "tabs", "declarativeContent", "storage", "*://mpes-brooksryan.c9users.io/*"],
+	"permissions": ["activeTab", "tabs", "declarativeContent", "storage", "*://mpes-brooksryan.c9users.io/*", "*://mpes-serve.com/*"],
 	"background": {
 		"scripts": ["background.js"],
 		"persistent": false
