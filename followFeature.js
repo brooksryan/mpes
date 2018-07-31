@@ -10,6 +10,8 @@ function makeAFollowingActionOnThisUser(loggedInUserId, userToBeFollowedId, verb
 
         $.get(queryURL, function(data) {
 
+        		console.log(data)
+
                 resolve(data);
 
             })
@@ -32,7 +34,9 @@ function addFollowStatusAndInteraction(followStatus) {
 
             var followURL = "https://mpes-brooksryan.c9users.io/users/createNewConnection/" + thisUsersMpInfo.id + "/" + thisMpPageInfo.id + "/";
 
-            $("div.info > div.mt-1").eq(0).after('<div class="mt-1"> <a href="" class="btn btn-sm btn-primary follow-button"> Follow </a></div>');
+            console.log(thisUsersMpInfo.id, thisMpPageInfo.id)
+
+            $("div.info > div.mt-1").eq(0).after('<div class="mt-1"> <a a href="#" class="btn btn-sm btn-primary follow-button"> Follow </a></div>');
 
             $(".follow-button").css({
 
@@ -43,11 +47,11 @@ function addFollowStatusAndInteraction(followStatus) {
 
             });
 
-            $("#follow-button").click(function() {
+            $(".follow-button").click(function() {
 
                 makeAFollowingActionOnThisUser(thisUsersMpInfo.id, thisMpPageInfo.id, "createNewConnection").then(function() {
 
-                    $("#follow-button").remove();
+                    $(".follow-button").remove();
 
                     followFeatureOrchestration();
 
@@ -61,7 +65,7 @@ function addFollowStatusAndInteraction(followStatus) {
 
             //var unFollowURL = "https://mpes-brooksryan.c9users.io/users/deleteConnection/" + thisUsersMpInfo.id + "/" + thisMpPageInfo.id +"/"
 
-            $("div.info > div.mt-1").eq(0).after('<div class="mt-1"> <a href="" class="btn btn-sm btn-primary follow-button"> Unfollow </a></div>');
+            $("div.info > div.mt-1").eq(0).after('<div class="mt-1"> <a href="#" class="btn btn-sm btn-primary follow-button"> Unfollow </a></div>');
 
             $(".follow-button").css({
 
@@ -72,11 +76,11 @@ function addFollowStatusAndInteraction(followStatus) {
 
             });
 
-            $("#follow-button").click(function() {
+            $(".follow-button").click(function() {
 
                 makeAFollowingActionOnThisUser(thisUsersMpInfo.id, thisMpPageInfo.id, "deleteConnection").then(function() {
 
-                    $("#follow-button").remove();
+                    $(".follow-button").remove();
 
                     followFeatureOrchestration();
 
