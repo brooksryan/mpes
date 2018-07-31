@@ -1,4 +1,4 @@
-/* WELCOME TO THE ORCHESTRATION LAYER. THIS FILE DETERMINES  */ 
+/* WELCOME TO THE ORCHESTRATION LAYER. THIS FILE DETERMINES  */
 /* WHAT TO DO BASED ON THE PAGE YOU ARE ON                   */
 
 /* EVERY THING HERE SHOULD HAVE A PAGE DETERMINATION OR      */
@@ -12,38 +12,30 @@ var thisUrlIsTheCurrentPage = whatPageAmIOn()
 
 var thisPageDetails = returnIdForMountainProjectPage(thisUrlIsTheCurrentPage);
 
-var thisBaseUrl = "https://mpes-brooksryan.c9users.io/"
+var thisBaseUrl = mpesBaseUrl
 
 
 //STUFF TO DO IF I'M ON MY OWN PAGE
-if (isThisTheLoggedInUser() === true ) {
+if (isThisTheLoggedInUser() === true) {
 
 }
 
 // STUFF TO DO IF YOU'RE ON A ROUTE PAGE
 else if (thisPageDetails.pageType() === "route") {
 
-	var thisRoutesId = Number(thisPageDetails.id)
+    var thisRoutesId = Number(thisPageDetails.id)
 
-	classicRouteOrchestration(thisRoutesId)
+    classicRouteOrchestration(thisRoutesId)
 
 }
 
 // STUFF TO DO IF YOU'RE ON ANOTHER USER'S PAGE
-else if (thisPageDetails.pageType() === "user"){
+else if (thisPageDetails.pageType() === "user") {
 
-	followFeatureOrchestration ()
+    followFeatureOrchestration()
 
-}
+} else {
 
-
-else {
-
-	thisNewFeed = new thisUsersFeed(mpesBaseUrl,thisUsersMpInfo.id)
-
-	thisNewFeed.userFeed(thisNewFeed.feedUrl)
+    thisUserFeedOrchestration(mpesBaseUrl, thisUsersMpInfo.id, 1)
 
 }
-
-
-
