@@ -8,7 +8,7 @@ I THINK
 //Create the button for syncing user data on the user info page
 
 // BASE URL FOR SERVER SIDE
-var mpesBaseUrl = "https://www.mpes-serve.com/"
+var mpesBaseUrl = "https://mpes-brooksryan.c9users.io/"
 
 
 //Define User Url Variable
@@ -30,6 +30,12 @@ function pageObject(url) {
     this.pageUrl = url;
 
     this.pageType = function() {
+
+    	if (this.splitUrl[3] === "route" && this.splitUrl[4] === "stats") {
+
+            return "stats"
+
+        }
 
         if (this.splitUrl[3] === "route") {
 
