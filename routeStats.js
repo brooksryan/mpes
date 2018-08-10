@@ -63,8 +63,6 @@ function docChangesForRouteStats(){
 
 function makeNewChart(routeStatResults){
 
-    console.log(routeStatResults)
-
     // I hate the name of this variable as much as you do
     var storageArray = []
 
@@ -73,8 +71,6 @@ function makeNewChart(routeStatResults){
     var chartValues = [];
 
     function compareNumbers(a, b) {
-
-        console.log(a.sortingGrade,b.sortingGrade)
 
         splita = a.sortingGrade.split(/([a-d])/)
 
@@ -93,12 +89,6 @@ function makeNewChart(routeStatResults){
         } 
 
         if (splita[0] === splitb[0]){
-
-            console.log(a > b)
-
-            console.log(a < b)
-
-            console.log(a,b)
             
 
             if (a.sortingGrade < b.sortingGrade){
@@ -213,8 +203,6 @@ function routeStatsOrchestration(){
     return getThisRouteStats()
 
         .then(function(data){
-
-            console.log(data)
 
             addMostTickedAtThisGrade(data.topFiveAtGradeBeforeTick)
 

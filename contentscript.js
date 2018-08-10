@@ -8,7 +8,7 @@ I THINK
 //Create the button for syncing user data on the user info page
 
 // BASE URL FOR SERVER SIDE
-var mpesBaseUrl = "https://mpes-brooksryan.c9users.io/"
+var mpesBaseUrl = "https://www.mpes-serve.com/"
 
 
 //Define User Url Variable

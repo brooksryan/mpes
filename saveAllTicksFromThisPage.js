@@ -1,5 +1,4 @@
 //get all urls for user ticks from a page
-console.log("I loaded the save all ticks thing")
 
 var userData = function(user){
 
@@ -8,8 +7,6 @@ var userData = function(user){
 	this.exportURL = user + "/tick-export";
 
 	this.calculateUserID = function(userURL){
-
-		console.log(userURL)
 			
 		var splitURL = userURL.split("/");
 
@@ -61,13 +58,9 @@ function getAllUserTickUrls(whatToDoWithUrls){
 
 		return new Promise(function(resolve, reject) {
 
-		console.log("I started the traverse");
-
 		$('h3:contains("Star Ratings ") ~ table > tbody > tr > td > a').each(function(index){
 
 			var thisUserData = 	new userData(this.href);
-
-			console.log(thisUserData.JSONstrigifiedData)
 
 			arrayOfLinks.push(thisUserData.userID);
 
@@ -85,8 +78,6 @@ function getRouteStatsOrchestration(){
 
 	.then(function(array) {
 	
-		console.log(array)
-
 		var getAllTicksUrl = mpesBaseUrl + 'ticksApi/' + 'routeTickProcessor'
 
 		$.ajax({
