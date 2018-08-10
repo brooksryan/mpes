@@ -31,6 +31,12 @@ function pageObject(url) {
 
     this.pageType = function() {
 
+    	if (this.splitUrl[3] === "route" && this.splitUrl[4] === "stats") {
+
+            return "stats"
+
+        }
+
         if (this.splitUrl[3] === "route") {
 
             return "route"
