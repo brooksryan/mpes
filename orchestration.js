@@ -14,9 +14,15 @@ var thisPageDetails = returnIdForMountainProjectPage(thisUrlIsTheCurrentPage);
 
 var thisBaseUrl = mpesBaseUrl
 
-
+console.log(thisPageDetails.pageType())
 //STUFF TO DO IF I'M ON MY OWN PAGE
 if (isThisTheLoggedInUser() === true) {
+
+}
+
+else if (thisPageDetails.pageType() === "stats") {
+
+    getRouteStatsOrchestration()
 
 }
 
@@ -25,7 +31,10 @@ else if (thisPageDetails.pageType() === "route") {
 
     var thisRoutesId = Number(thisPageDetails.id)
 
-    classicRouteOrchestration(thisRoutesId)
+    console.log(thisUrlIsTheCurrentPage)
+
+    routeStatsOrchestration()
+    // classicRouteOrchestration(thisRoutesId)
 
 }
 

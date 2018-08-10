@@ -1,8 +1,8 @@
 {
 	"name": "BETA Mountain Project Ehancement Suite",
-	"version": "1.0",
+	"version": "1.1",
 	"description": "An extension to improve your Mountain Project Experience",
-	"permissions": ["activeTab", "tabs", "declarativeContent", "storage", "*://mpes-brooksryan.c9users.io/*", "*://mpes-serve.com/*"],
+	"permissions": ["activeTab", "tabs", "declarativeContent", "storage", "*://*.mpes-serve.com/*", "*://mpes-brooksryan.c9users.io/*"],
 	"background": {
 		"scripts": ["background.js"],
 		"persistent": false
@@ -18,10 +18,13 @@
             ],
         "js": [
         		"jquery.js",
+                "chart.js",
         		"csvJSON.js", 
         		"contentscript.js",         		
         		"isThisRouteClassic.js",
         		"followFeature.js",
+                "saveAllTicksFromThisPage.js",
+                "routeStats.js",
         		"orchestration.js"],
         "run_at": "document_end"
         }
